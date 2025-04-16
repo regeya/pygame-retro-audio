@@ -1,7 +1,6 @@
 import pygame
 import random
 import array
-import numpy as np
 
 # Initialize Pygame
 pygame.mixer.pre_init(channels=1, allowedchanges=0)
