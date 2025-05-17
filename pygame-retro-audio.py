@@ -1,6 +1,7 @@
 import pygame
 import random
 import array
+import time
 
 # Initialize Pygame
 pygame.mixer.pre_init(channels=1, allowedchanges=0)
@@ -11,7 +12,7 @@ pygame.mixer.init()
 frequency = 440  # A4 note
 amplitude = 0.5  # Volume (0.0 to 1.0)
 sample_rate = 44100
-duration = 2  # seconds
+duration = 0.5  # seconds
 
 num_samples = int(sample_rate * duration)
 wave_data = array.array("h")
@@ -32,18 +33,28 @@ def generate_noise(multiplier, num_samples):
     for i in range(num_samples):
         yield next(sample)
 
-
-multiplier = 16
+#    def build_samples(self):
+#        period = int(round(get_init()[0] / self.frequency))
+#        samples = array("h", [0] * period)
+#        amplitude = 2 ** (abs(get_init()[1]) - 1) - 1
+#        for time in range(period):
+#            if time < period / 2:
+#                samples[time] = amplitude
+#            else:
+#                samples[time] = -amplitude
+#        return samples
 
 print(multiplier, num_samples)
 
 for multiplier in (4, 8, 16):
+    wave_data = array.array("h")
     for sample in generate_noise(multiplier, num_samples):
         wave_data.append(sample)
 
     sound = pygame.mixer.Sound(buffer=wave_data)
     # Play the sound
     sound.play()
+    time.sleep(1)
 
 # Keep the program running until the sound finishes or the user quits
 running = True
