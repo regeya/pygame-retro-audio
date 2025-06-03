@@ -29,22 +29,75 @@ def return_noise_samples(multiplier):
 
 def generate_noise(multiplier, num_samples):
     sample = return_noise_samples(multiplier)
-    print(sample)
     for i in range(num_samples):
         yield next(sample)
 
-#    def build_samples(self):
-#        period = int(round(get_init()[0] / self.frequency))
-#        samples = array("h", [0] * period)
-#        amplitude = 2 ** (abs(get_init()[1]) - 1) - 1
-#        for time in range(period):
-#            if time < period / 2:
-#                samples[time] = amplitude
-#            else:
-#                samples[time] = -amplitude
-#        return samples
 
-print(multiplier, num_samples)
+def build_samples(freq, duration):
+    period = int(44100 / freq)
+    samples = array("h", [0] * period)
+    amplitude = 32767
+    for time in range(period):
+        if time < period / 2:
+            samples[time] = amplitude
+        else:
+            samples[time] = -amplitude
+    return samples
+
+
+#    def parse_string(self, play_string):
+#        tokenized = [f for f in re.findall("([a-z]|[0-9]+|[#+-><])", play_string) if f]
+#        myarray = []
+#        for j, i in enumerate(tokenized):
+#            try:
+#                k = tokenized[j+1]
+#            except:
+#                k = None
+#            sharp = 0
+#            if i == ">":
+#                self.modifier += 12
+#            elif i == "<":
+#                self.modifier -= 12
+#            elif i in ("n", "l"):
+#                self.stac = False
+#            elif i == "s":
+#                self.stac = True
+#            elif i == "t":
+#                self.tempo = int(k)
+#            elif i == "q":
+#                if int(k) == 1:
+#                    self.env = 1
+#                else:
+#                    self.env = 0
+#            elif i == "v":
+#                print(k)
+#                self.current_vol = int(k)
+#                self.current_volume = int(k) * self.vol_steps
+#                print(self.current_volume)
+#            elif i == "o":
+#                self.modifier = (int(k) - self.octave) * 12
+#            elif i == "p":
+#                if k:
+#                    self.notelen = int(k)
+#                    f = 60.0/(self.tempo*(self.notelen/4.0))
+#                    print(f)
+#                    time.sleep(f)
+#            elif i in self.major_notes:
+#                if k:
+#                    if k == "#" or k == "+":
+#                        sharp = 1
+#                    elif k == "-":
+#                        sharp = -1
+#                    elif k.isdigit():
+#                        self.notelen = int(k)
+#                x = self.play_note(i, sharp)
+#                print (i, k)
+#                sound = pygame.sndarray.make_sound(x)
+#                sound.play()
+#                time.sleep(len(x)/(self.sample_rate * 1.0))
+#                self.notelen = 4
+#
+# print(multiplier, num_samples)
 
 for multiplier in (4, 8, 16):
     wave_data = array.array("h")
